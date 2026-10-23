@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>专注小英雄 - FocusHero Pro (学术临床重构版)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    
+    body {
+      font-family: 'Noto Sans SC', 'Fredoka', sans-serif;
+      background-color: #F8FAFC;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .pulse-ring {
+      animation: pulse-ring 3s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.08); opacity: 0.4; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    .combo-bounce {
+      animation: comboPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes comboPop {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body class="flex justify-center items-center min-h-screen p-2 sm:p-4">
+
+  <!-- Mobile Frame Container -->
+  <div class="w-full max-w-md bg-white rounded-[32px] shadow-2xl border-4 border-indigo-100 overflow-hidden flex flex-col h-[840px] relative">
+    
+    <!-- Header / Status Bar -->
+    <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 pt-4 pb-3 flex justify-between items-center shadow-md z-10">
+      <div class="flex items-center gap-2">
+        <div class="w-10 h-10 rounded-full bg-amber-400 border-2 border-white flex items-center justify-center text-xl shadow">
+          🦁
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <h1 class="text-base font-bold tracking-wide">专注小英雄</h1>
+            <span class="bg-purple-800/60 text-[9px] px-1.5 py-0.5 rounded text-purple-200 border border-purple-400/30">Pro 临床版</span>
+          </div>
+          <p class="text-[11px] text-indigo-200" id="level-display">LV.3 前额叶探索者</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2.5">
+        <div class="bg-black/20 px-3 py-1 rounded-full flex items-center gap-1.5 border border-white/20">
+          <span class="text-amber-300 text-xs">⭐</span>
+          <span id="star-count" class="font-bold text-xs">128</span>
+        </div>
+        <button onclick="switchTab('parent')" class="bg-white/10 hover:bg-white/20 text-xs px-2.5 py-1.5 rounded-lg flex items-center gap-1 transition backdrop-blur-sm border border-white/10">
+          <i class="fa-solid fa-chart-line text-amber-300"></i> 数据
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Dynamic Content Area -->
+    <main class="flex-1 overflow-y-auto bg-slate-50 relative pb-20">
+
+      <!-- SECTION 1: HOME / HUB -->
+      <section id="tab-home" class="p-4 space-y-4">
+        <!-- Daily Adaptive Goal Card -->
+        <div class="bg-gradient-to-r from-teal-500 via-emerald-500 to-emerald-600 rounded-2xl p-4 text-white shadow-lg relative overflow-hidden">
+          <div class="relative z-10">
+            <div class="flex justify-between items-start">
+              <span class="bg-white/20 backdrop-blur-md text-[10px] px-2 py-0.5 rounded-full font-medium">前额叶皮层自适应神经训练</span>
+              <span class="text-[10px] bg-amber-400/30 text-amber-100 px-2 py-0.5 rounded-md border border-amber-300/30">难度: 动态匹配中</span>
+            </div>
+            <h2 class="text-base font-bold mt-2">今日认知唤醒计划</h2>
+            <div class="w-full bg-black/20 rounded-full h-2 mt-3 overflow-hidden">
+              <div class="bg-amber-300 h-2 rounded-full transition-all duration-500" style="width: 65%"></div>
+            </div>
+            <div class="text-[11px] text-teal-100 mt-2 flex justify-between">
+              <span>完成 2/3 个神经范式模块</span>
+              <span class="font-semibold text-amber-200">+30 能量星</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Academic Clinical Modules Title -->
+        <div class="flex justify-between items-center px-1">
+          <h3 class="font-bold text-slate-700 text-sm flex items-center gap-1.5">
+            <i class="fa-solid fa-brain text-indigo-500"></i> 临床认知范式训练 (CPT / Stroop)
+          </h3>
+          <span class="text-[10px] text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md font-medium">依据 Barkely 理论设计</span>
+        </div>
+
+        <!-- Mini Game Cards -->
+        <div class="grid grid-cols-1 gap-3">
+          <!-- Game 1: CPT Visual Search + Distractor Adaptation -->
+          <div onclick="openGame('search')" class="bg-white p-3.5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-3 cursor-pointer hover:border-indigo-300 transition group">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-2xl shadow-inner group-hover:scale-105 transition">
+              🔍
+            </div>
+            <div class="flex-1">
+              <div class="flex justify-between items-center">
+                <h4 class="font-bold text-slate-800 text-sm">视觉选择性干扰搜索 (CPT)</h4>
+                <span class="text-[9px] bg-amber-50 text-amber-600 px-1.5 py-0.5 rounded border border-amber-200">抗干扰过滤</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mt-0.5">在动态视觉噪点中快速锁定目标，增强选择性注意与抑制</p>
+            </div>
+            <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+          </div>
+
+          <!-- Game 2: Stroop + Stop-Signal Impulse Control -->
+          <div onclick="openGame('gonogo')" class="bg-white p-3.5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-3 cursor-pointer hover:border-indigo-300 transition group">
+            <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center text-2xl shadow-inner group-hover:scale-105 transition">
+              🛑
+            </div>
+            <div class="flex-1">
+              <div class="flex justify-between items-center">
+                <h4 class="font-bold text-slate-800 text-sm">色词冲突急刹车 (Stroop/Go-NoGo)</h4>
+                <span class="text-[9px] bg-emerald-50 text-emerald-600 px-1.5 py-0.5 rounded border border-emerald-200">前额叶急刹车</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mt-0.5">突破文字与颜色的视觉冲突，训练毫秒级冲动抑制力</p>
+            </div>
+            <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+          </div>
+
+          <!-- Game 3: Visuospatial Working Memory Grid -->
+          <div onclick="openGame('memory')" class="bg-white p-3.5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-3 cursor-pointer hover:border-indigo-300 transition group">
+            <div class="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center text-2xl shadow-inner group-hover:scale-105 transition">
+              🧩
+            </div>
+            <div class="flex-1">
+              <div class="flex justify-between items-center">
+                <h4 class="font-bold text-slate-800 text-sm">视空间矩阵重现 (Visuospatial Memory)</h4>
+                <span class="text-[9px] bg-purple-50 text-purple-600 px-1.5 py-0.5 rounded border border-purple-200">工作记忆</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mt-0.5">重现九宫格萌宠位置闪烁，激活视空间工作记忆回路</p>
+            </div>
+            <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+          </div>
+        </div>
+
+        <!-- External Attention Boundary Timer -->
+        <div onclick="switchTab('timer')" class="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-100 rounded-2xl p-4 flex items-center justify-between cursor-pointer hover:shadow-md transition">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow">
+              <i class="fa-solid fa-hourglass-half text-base"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-indigo-950 text-xs">外化时间边界 · 视觉微微计时</h4>
+              <p class="text-[11px] text-indigo-600">把抽象时间转化为可看见的粒子呼吸律动</p>
+            </div>
+          </div>
+          <span class="bg-indigo-600 text-white text-xs px-3 py-1.5 rounded-xl font-bold shadow-sm">开启</span>
+        </div>
+      </section>
+
+      <!-- SECTION 2: FOCUS TIMER (BEHAVIORAL THERAPY) -->
+      <section id="tab-timer" class="hidden p-5 flex flex-col items-center justify-center min-h-[600px] text-center space-y-6">
+        <div>
+          <span class="bg-indigo-100 text-indigo-800 text-xs font-bold px-3 py-1 rounded-full border border-indigo-200">外化时间界限 (External Time Boundary)</span>
+          <h2 class="text-lg font-bold text-slate-800 mt-2.5">专注能量舱</h2>
+          <p class="text-xs text-slate-500 mt-1">降低任务启动门槛（Chunking 原则），选择微时间目标</p>
+        </div>
+
+        <!-- Breathing / Timer Orb Visual -->
+        <div class="relative w-48 h-48 flex items-center justify-center">
+          <div id="orb-pulse" class="absolute w-44 h-44 bg-indigo-200/50 rounded-full pulse-ring"></div>
+          <div class="w-36 h-36 bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-600 rounded-full flex flex-col items-center justify-center text-white shadow-xl relative z-10 border-4 border-white">
+            <span id="timer-display" class="text-3xl font-extrabold tracking-widest font-mono">03:00</span>
+            <span class="text-[10px] text-indigo-200 mt-1" id="timer-status">跟随光环平缓吸气...</span>
+          </div>
+        </div>
+
+        <!-- Preset Selection -->
+        <div class="flex gap-2">
+          <button onclick="setTimerPreset(3)" class="px-3.5 py-1.5 bg-indigo-50 border border-indigo-200 text-indigo-700 rounded-xl text-xs font-bold hover:bg-indigo-600 hover:text-white transition">3分钟 (极易启动)</button>
+          <button onclick="setTimerPreset(5)" class="px-3.5 py-1.5 bg-indigo-50 border border-indigo-200 text-indigo-700 rounded-xl text-xs font-bold hover:bg-indigo-600 hover:text-white transition">5分钟 (稳固专注)</button>
+          <button onclick="setTimerPreset(10)" class="px-3.5 py-1.5 bg-indigo-50 border border-indigo-200 text-indigo-700 rounded-xl text-xs font-bold hover:bg-indigo-600 hover:text-white transition">10分钟 (深度挑战)</button>
+        </div>
+
+        <!-- Sensory White Noise -->
+        <div class="w-full max-w-xs bg-slate-100 p-2 rounded-2xl flex justify-around text-xs">
+          <button onclick="toggleSound('rain')" class="flex items-center gap-1 text-slate-600 hover:text-indigo-600"><i class="fa-solid fa-cloud-rain"></i>  alpha粉噪</button>
+          <button onclick="toggleSound('wave')" class="flex items-center gap-1 text-slate-600 hover:text-indigo-600"><i class="fa-solid fa-water"></i> 深海律动</button>
+          <button onclick="toggleSound('birds')" class="flex items-center gap-1 text-slate-600 hover:text-indigo-600"><i class="fa-solid fa-tree"></i> 森林环境</button>
+        </div>
+
+        <!-- Timer Control Buttons -->
+        <div class="flex gap-3 w-full max-w-xs">
+          <button id="btn-start-timer" onclick="toggleTimer()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-2xl shadow-lg transition">开启专注</button>
+          <button onclick="resetTimer()" class="bg-slate-200 text-slate-600 px-4 py-3 rounded-2xl font-bold hover:bg-slate-300 text-xs">重置</button>
+        </div>
+      </section>
+
+      <!-- SECTION 3: REWARD SHOP (TOKEN ECONOMY) -->
+      <section id="tab-rewards" class="hidden p-4 space-y-4">
+        <div class="bg-gradient-to-r from-amber-400 to-orange-500 rounded-2xl p-4 text-white shadow-md">
+          <h2 class="text-base font-bold">代币经济强化中心 (Token Economy)</h2>
+          <p class="text-xs text-amber-100 mt-0.5">毫秒级正向多巴胺反馈，转化为可感知的实体契约！</p>
+        </div>
+
+        <h3 class="font-bold text-slate-700 text-sm">解锁专属英雄勋章</h3>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-white p-3 rounded-2xl border border-slate-100 flex flex-col items-center text-center shadow-sm">
+            <div class="text-4xl my-2">🦁</div>
+            <h4 class="font-bold text-slate-800 text-xs">勇敢狮小宝</h4>
+            <span class="text-[10px] text-emerald-600 font-bold mt-1">已激活 (已佩戴)</span>
+          </div>
+
+          <div class="bg-white p-3 rounded-2xl border border-slate-100 flex flex-col items-center text-center shadow-sm relative opacity-90">
+            <div class="text-4xl my-2">🦉</div>
+            <h4 class="font-bold text-slate-800 text-xs">睿智猫头鹰</h4>
+            <button class="mt-2 bg-amber-500 text-white text-[10px] px-3 py-1 rounded-full font-bold shadow-sm">⭐ 150 兑换</button>
+          </div>
+
+          <div class="bg-white p-3 rounded-2xl border border-slate-100 flex flex-col items-center text-center shadow-sm">
+            <div class="text-4xl my-2">🐬</div>
+            <h4 class="font-bold text-slate-800 text-xs">敏捷小海豚</h4>
+            <button class="mt-2 bg-amber-500 text-white text-[10px] px-3 py-1 rounded-full font-bold shadow-sm">⭐ 200 兑换</button>
+          </div>
+
+          <div class="bg-white p-3 rounded-2xl border border-slate-100 flex flex-col items-center text-center shadow-sm">
+            <div class="text-4xl my-2">🚀</div>
+            <h4 class="font-bold text-slate-800 text-xs">星际火箭</h4>
+            <button class="mt-2 bg-amber-500 text-white text-[10px] px-3 py-1 rounded-full font-bold shadow-sm">⭐ 300 兑换</button>
+          </div>
+        </div>
+
+        <!-- Custom Parent Real-world Reward -->
+        <div class="bg-amber-50 border border-amber-200 p-3.5 rounded-2xl">
+          <div class="flex justify-between items-center mb-1">
+            <h4 class="font-bold text-amber-900 text-xs flex items-center gap-1">
+              <i class="fa-solid fa-gift text-amber-600"></i> 家庭行为契约池 (Real-World Token)
+            </h4>
+            <span class="text-[10px] bg-amber-200 text-amber-800 px-1.5 py-0.5 rounded font-bold">已生效</span>
+          </div>
+          <p class="text-xs text-amber-800 mt-1">集满 <span class="font-bold text-indigo-700">200⭐</span> 可兑换：“周末游乐园骑行 45 分钟”</p>
+        </div>
+      </section>
+
+      <!-- SECTION 4: ACADEMIC CLINICAL PARENT DASHBOARD -->
+      <section id="tab-parent" class="hidden p-4 space-y-4">
+        <div class="bg-slate-900 text-white p-4 rounded-2xl shadow-lg border border-slate-800">
+          <div class="flex justify-between items-center">
+            <div>
+              <span class="text-[10px] text-indigo-400 font-mono tracking-wider">CLINICAL DATA DASHBOARD</span>
+              <h2 class="text-base font-bold">儿童执行功能与 RTV 评估</h2>
+            </div>
+            <span class="bg-emerald-500/20 text-emerald-400 text-xs px-2.5 py-1 rounded-lg border border-emerald-500/30 font-medium">评估: 神经稳定性提升中</span>
+          </div>
+        </div>
+
+        <!-- Clinical Quantitative Indicators -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-[10px] text-slate-400">反应时间变异性 (RTV)</span>
+              <i class="fa-solid fa-circle-info text-slate-300 text-[10px]" title="RTV越低代表专注稳定性越高"></i>
+            </div>
+            <div class="text-lg font-extrabold text-indigo-600 mt-1">142 <span class="text-xs text-slate-400 font-normal">ms</span></div>
+            <p class="text-[10px] text-emerald-500 mt-1 flex items-center gap-0.5">
+              <i class="fa-solid fa-arrow-down"></i> 较上周波动降低 24%
+            </p>
+          </div>
+
+          <div class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-[10px] text-slate-400">冲动误触率 (Commission)</span>
+              <i class="fa-solid fa-circle-info text-slate-300 text-[10px]"></i>
+            </div>
+            <div class="text-lg font-extrabold text-emerald-600 mt-1">8.2 <span class="text-xs text-slate-400 font-normal">%</span></div>
+            <p class="text-[10px] text-emerald-500 mt-1 flex items-center gap-0.5">
+              <i class="fa-solid fa-arrow-down"></i> 误触急刹车率下降 15%
+            </p>
+          </div>
+        </div>
+
+        <!-- Weekly Focus Span Chart -->
+        <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm space-y-2">
+          <div class="flex justify-between items-center">
+            <h4 class="text-xs font-bold text-slate-700">近7天持续注意力跨度 (Sustained Span)</h4>
+            <span class="text-[10px] text-slate-400">单位: 分钟</span>
+          </div>
+          <div class="flex items-end justify-between h-24 pt-4 px-2">
+            <div class="flex flex-col items-center gap-1"><div class="w-5 bg-indigo-200 rounded-t h-8"></div><span class="text-[9px] text-slate-400">周一</span></div>
+            <div class="flex flex-col items-center gap-1"><div class="w-5 bg-indigo-200 rounded-t h-10"></div><span class="text-[9px] text-slate-400">周二</span></div>
+            <div class="flex flex-col items-center gap-1"><div class="w-5 bg-indigo-300 rounded-t h-12"></div><span class="text-[9px] text-slate-400">周三</span></div>
+            <div class="flex flex-col items-center gap-1"><div class="w-5 bg-indigo-400 rounded-t h-16"></div><span class="text-[9px] text-slate-400">周四</span></div>
+            <div class="flex flex-col items-center gap-1"><div class="w-5 bg-indigo-500 rounded-t h-14"></div><span class="text-[9px] text-slate-400">周五</span></div>
+            <div class="flex flex-col items-center gap-1"><div class="w-5 bg-indigo-600 rounded-t h-20"></div><span class="text-[9px] text-slate-400">周六</span></div>
+            <div class="flex flex-col items-center gap-1"><div class="w-5 bg-indigo-600 rounded-t h-22"></div><span class="text-[9px] text-slate-400">周日</span></div>
+          </div>
+        </div>
+
+        <!-- Academic CBT Behavioral Strategy -->
+        <div class="bg-indigo-50/70 border border-indigo-100 p-3.5 rounded-2xl space-y-2">
+          <h4 class="text-xs font-bold text-indigo-950 flex items-center gap-1.5">
+            <i class="fa-solid fa-user-doctor text-indigo-600"></i> 本周学术级行为干预建议 (CBT Guidance)
+          </h4>
+          <ul class="text-xs text-indigo-900 space-y-1.5 list-disc list-inside leading-relaxed">
+            <li><strong>减少工作记忆过载：</strong> 语言指令请遵从“单步法则”（一次给一个口令），避免连续给出多项复杂指令。</li>
+            <li><strong>建立外部锚点：</strong> 在家庭做作业区域放置实物计时沙漏，把无形的时间转化为有形的视觉消耗。</li>
+            <li><strong>微小成功即时表扬：</strong> 只要孩子连续专注满 5 分钟，请立即给予具体的言语肯定（如：“我看到你刚才5分钟眼睛一直看着书本，太棒了！”）。</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- GAME OVERLAY (MODAL CONTAINER) -->
+      <div id="game-modal" class="hidden fixed inset-0 bg-slate-900/80 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full max-w-sm p-5 relative shadow-2xl flex flex-col items-center">
+          <button onclick="closeGame()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          
+          <div id="game-container" class="w-full text-center space-y-4">
+            <!-- Dynamic Academic Game Content Injected Here -->
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bg-white border-t border-slate-200 px-6 py-2 flex justify-between items-center absolute bottom-0 left-0 right-0 z-20">
+      <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center text-indigo-600">
+        <i class="fa-solid fa-house text-base"></i>
+        <span class="text-[10px] font-bold mt-0.5">训练大厅</span>
+      </button>
+      <button onclick="switchTab('timer')" id="nav-timer" class="flex flex-col items-center text-slate-400 hover:text-indigo-600">
+        <i class="fa-solid fa-clock text-base"></i>
+        <span class="text-[10px] font-bold mt-0.5">微专注</span>
+      </button>
+      <button onclick="switchTab('rewards')" id="nav-rewards" class="flex flex-col items-center text-slate-400 hover:text-indigo-600">
+        <i class="fa-solid fa-award text-base"></i>
+        <span class="text-[10px] font-bold mt-0.5">代币奖励</span>
+      </button>
+      <button onclick="switchTab('parent')" id="nav-parent" class="flex flex-col items-center text-slate-400 hover:text-indigo-600">
+        <i class="fa-solid fa-chart-line text-base"></i>
+        <span class="text-[10px] font-bold mt-0.5">临床报告</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <script>
+    // App State Management
+    let starCount = 128;
+    let timerInterval = null;
+    let timerSeconds = 180;
+    let isTimerRunning = false;
+
+    // Navigation Switcher
+    function switchTab(tabName) {
+      const tabs = ['home', 'timer', 'rewards', 'parent'];
+      tabs.forEach(t => {
+        document.getElementById(`tab-${t}`).classList.add('hidden');
+        const navItem = document.getElementById(`nav-${t}`);
+        if (navItem) {
+          navItem.classList.remove('text-indigo-600');
+          navItem.classList.add('text-slate-400');
+        }
+      });
+
+      document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+      const activeNav = document.getElementById(`nav-${tabName}`);
+      if (activeNav) {
+        activeNav.classList.remove('text-slate-400');
+        activeNav.classList.add('text-indigo-600');
+      }
+    }
+
+    // Timer Logic
+    function setTimerPreset(mins) {
+      resetTimer();
+      timerSeconds = mins * 60;
+      updateTimerDisplay();
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timerSeconds / 60);
+      const secs = timerSeconds % 60;
+      document.getElementById('timer-display').innerText = 
+        `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function toggleTimer() {
+      const btn = document.getElementById('btn-start-timer');
+      const orb = document.getElementById('orb-pulse');
+      
+      if (!isTimerRunning) {
+        isTimerRunning = true;
+        btn.innerText = "暂停专注";
+        btn.classList.replace('bg-indigo-600', 'bg-amber-500');
+        orb.classList.add('pulse-ring');
+
+        timerInterval = setInterval(() => {
+          if (timerSeconds > 0) {
+            timerSeconds--;
+            updateTimerDisplay();
+          } else {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            btn.innerText = "完成专注！";
+            btn.classList.replace('bg-amber-500', 'bg-emerald-600');
+            addStars(20);
+            alert("🎉 太棒了！你完成了微微专注练习，获得 +20 能量星！");
+          }
+        }, 1000);
+      } else {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+        btn.innerText = "继续专注";
+        btn.classList.replace('bg-amber-500', 'bg-indigo-600');
+        orb.classList.remove('pulse-ring');
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      isTimerRunning = false;
+      timerSeconds = 180;
+      updateTimerDisplay();
+      const btn = document.getElementById('btn-start-timer');
+      btn.innerText = "开启专注";
+      btn.className = "flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-2xl shadow-lg transition";
+    }
+
+    function toggleSound(type) {
+      alert(`🎵 已调频至【${type === 'rain' ? 'alpha波粉红噪音' : type === 'wave' ? '深海环境音' : '森林自然音'}】，辅助前额叶集中！`);
+    }
+
+    function addStars(num) {
+      starCount += num;
+      document.getElementById('star-count').innerText = starCount;
+    }
+
+    // ACADEMIC MINI-GAMES MODAL SYSTEM
+    function openGame(gameType) {
+      const modal = document.getElementById('game-modal');
+      const container = document.getElementById('game-container');
+      modal.classList.remove('hidden');
+
+      if (gameType === 'search') {
+        initSearchGame(container);
+      } else if (gameType === 'gonogo') {
+        initGoNoGoGame(container);
+      } else if (gameType === 'memory') {
+        initMemoryGame(container);
+      }
+    }
+
+    function closeGame() {
+      if (gonogoTimer) clearInterval(gonogoTimer);
+      document.getElementById('game-modal').classList.add('hidden');
+    }
+
+    // GAME 1: CPT Adaptive Visual Search Task
+    function initSearchGame(container) {
+      const targetEmoji = "🐶";
+      const items = ["🐱", "🐰", "🦊", "🐻", "🐶", "🐱", "🐼", "🐶", "🐨", "🦁", "🐯", "🐶"];
+      
+      container.innerHTML = `
+        <span class="bg-amber-100 text-amber-700 text-xs font-bold px-2.5 py-0.5 rounded-full">选择性注意 (CPT 范式)</span>
+        <h3 class="text-base font-bold text-slate-800 mt-1">快速锁定“小狗 🐶”！</h3>
+        <p class="text-xs text-slate-500">过滤掉干扰动物，锻炼选择性抗干扰能力</p>
+        
+        <div class="grid grid-cols-4 gap-2.5 my-4">
+          ${items.map((emoji) => `
+            <button onclick="checkSearchTarget('${emoji}', this)" class="h-14 text-2xl bg-slate-100 hover:bg-slate-200 rounded-2xl flex items-center justify-center border-2 border-slate-200 active:scale-90 transition">
+              ${emoji}
+            </button>
+          `).join('')}
+        </div>
+        <p id="search-status" class="text-xs font-bold text-indigo-600 h-4"></p>
+      `;
+    }
+
+    function checkSearchTarget(emoji, btn) {
+      if (emoji === "🐶") {
+        btn.classList.replace('bg-slate-100', 'bg-emerald-200');
+        btn.classList.replace('border-slate-200', 'border-emerald-500');
+        document.getElementById('search-status').innerText = "✅ 锁定目标！多巴胺能量 +5⭐";
+        addStars(5);
+      } else {
+        btn.classList.replace('bg-slate-100', 'bg-rose-200');
+        document.getElementById('search-status').innerText = "❌ 别急着按哦！先看清再动手指！";
+      }
+    }
+
+    // GAME 2: Stroop + Stop-Signal Impulse Control Task
+    let gonogoTimer = null;
+    let currentTask = { text: "绿灯", color: "text-emerald-500", isGo: true };
+    function initGoNoGoGame(container) {
+      container.innerHTML = `
+        <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2.5 py-0.5 rounded-full">Stroop 冲动急刹车</span>
+        <h3 class="text-base font-bold text-slate-800 mt-1">只看“文字颜色”，不看意思！</h3>
+        <p class="text-xs text-slate-500">🟢 字体是绿色：立即按下 | 🔴 字体是红色：绝对刹车！</p>
+        
+        <div id="stroop-card" class="w-36 h-36 my-4 rounded-3xl bg-slate-100 border-4 border-slate-200 mx-auto flex items-center justify-center text-3xl font-extrabold shadow-inner transition-all">
+          <span id="stroop-text" class="text-emerald-500">绿灯</span>
+        </div>
+
+        <button onclick="pressGoNoGo()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-2xl active:scale-95 transition shadow-lg">
+          踩刹车 / 按下按键！
+        </button>
+        <p id="gonogo-msg" class="text-xs font-bold text-slate-600 h-4 mt-2"></p>
+      `;
+
+      startStroopCycle();
+    }
+
+    function startStroopCycle() {
+      const stroopText = document.getElementById('stroop-text');
+      if (!stroopText) return;
+
+      gonogoTimer = setInterval(() => {
+        const isGreen = Math.random() > 0.4;
+        if (isGreen) {
+          currentTask = { text: Math.random() > 0.5 ? "绿灯" : "红灯", color: "text-emerald-500", isGo: true };
+        } else {
+          currentTask = { text: Math.random() > 0.5 ? "绿灯" : "红灯", color: "text-rose-500", isGo: false };
+        }
+        
+        stroopText.className = `${currentTask.color} font-extrabold text-3xl`;
+        stroopText.innerText = currentTask.text;
+      }, 1800);
+    }
+
+    function pressGoNoGo() {
+      const msg = document.getElementById('gonogo-msg');
+      if (currentTask.isGo) {
+        msg.innerText = "🎉 克服冲突！反应迅速 +5⭐";
+        msg.className = "text-xs font-bold text-emerald-600 h-4 mt-2";
+        addStars(5);
+      } else {
+        msg.innerText = "⚠️ 踩错刹车了！红字体时管住小手哦！";
+        msg.className = "text-xs font-bold text-rose-500 h-4 mt-2";
+      }
+    }
+
+    // GAME 3: Visuospatial Working Memory Grid
+    function initMemoryGame(container) {
+      container.innerHTML = `
+        <span class="bg-purple-100 text-purple-700 text-xs font-bold px-2.5 py-0.5 rounded-full">视空间工作记忆</span>
+        <h3 class="text-base font-bold text-slate-800 mt-1">记住萌宠点亮的“位置网格”</h3>
+        <p class="text-xs text-slate-500">记住九宫格位置闪烁，锻炼空间工作记忆</p>
+        
+        <div class="grid grid-cols-3 gap-2 my-4 w-60 mx-auto">
+          ${[1,2,3,4,5,6,7,8,9].map((id) => `
+            <button id="grid-${id}" class="h-16 bg-slate-100 rounded-2xl text-xl border-2 border-slate-200 flex items-center justify-center">
+              🐾
+            </button>
+          `).join('')}
+        </div>
+
+        <button onclick="playMemoryGridDemo()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-2xl shadow">
+          开启网格闪烁演示
+        </button>
+      `;
+    }
+
+    function playMemoryGridDemo() {
+      const seq = [2, 6, 7];
+      seq.forEach((id, idx) => {
+        setTimeout(() => {
+          const el = document.getElementById(`grid-${id}`);
+          if (el) {
+            el.classList.add('bg-amber-300', 'scale-105', 'border-amber-500');
+            setTimeout(() => el.classList.remove('bg-amber-300', 'scale-105', 'border-amber-500'), 500);
+          }
+        }, (idx + 1) * 700);
+      });
+    }
+  </script>
+</body>
+</html>
